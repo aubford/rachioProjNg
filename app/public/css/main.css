@@ -9,4 +9,27 @@
   background-size: cover;
   width: 100%;
   color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.zone-text {
+  display: block;
+}
+.zone-card {
+  overflow: visible;
+}
+.activity-state {
+  font-size: 16pt;
+}
+.run-zone {
+  font-size: 20pt;
+  position: relative;
+}
+.droplet-image {
+  width: 50px;
+}
+.run-time-menu {
+  height: 500px;
+  overflow-y: scroll;
 }
