@@ -1,9 +1,33 @@
-app.controller('IndexController', ['$scope', 'factest', function($scope, factest){
+app.controller('IndexController', ['$scope', 'getUserInfo', 'durations', 'userId', function($scope, getUserInfo, durations, userId){
 
-    $scope.durations = [1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,120,180,240,300,360,420,480,540,600]
+     getUserInfo.getId('c3667b81-92a6-4913-b83c-64cc713cbc1e').then(function(results){
+         console.log(results)
+         userId.id = results.data.id
+     })
 
-    $scope.logvalue = function(value){
+     $scope.durations  = durations
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    $scope.logValue = function(value){
       console.log(value)
+      console.log(userId.id)
     }
 
     }])
