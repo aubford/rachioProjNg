@@ -3,11 +3,24 @@ app.controller('IndexController', ['$scope', 'getUserInfo', 'durations', 'userIn
     userInfo.token = 'c3667b81-92a6-4913-b83c-64cc713cbc1e'
 
     getUserInfo.getId().then(function(results){
-        //  console.log(results)
          userInfo.id = results.data.id
 
          getUserInfo.getUserHardwareInfo(userInfo.id).then(function(results){
-           console.log(results);
+
+           results.data.devices.forEach(function(e){
+             var zoneIds = []
+
+             e.zones.forEach(function(z){
+               zoneIds.push(z.id)
+             })
+
+             userInfo.devices.push({
+               deviceId: e.id,
+               zones: zoneIds
+             })
+
+           })
+
          })
     })
 
