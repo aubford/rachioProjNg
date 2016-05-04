@@ -1,18 +1,15 @@
-var app = angular.module('appApp', ['ngRoute', 'ngAnimate'])
+var app = angular.module('appApp', ['ngRoute', 'ngAnimate', 'ngMaterial'])
 
-		app.run(function($rootScope, $location, $timeout) {
-		$rootScope.$on('$viewContentLoaded', function() {
-			$timeout(function() {
-					componentHandler.upgradeAllRegistered();
-			})
-		})
-		})
 
-		app.config(function($routeProvider) {
+		app.config(function($routeProvider, $mdThemingProvider, $mdIconProvider) {
 			$routeProvider
 				.when('/', {
 					templateUrl: '../partials/index.html',
 					controller: 'IndexController'
 				})
 				.otherwise({redirectTo : '/'})
+
+			$mdThemingProvider.theme('default')
+				.primaryPalette('cyan')
+				.accentPalette('lime')
 		})

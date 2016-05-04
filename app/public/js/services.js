@@ -11,6 +11,17 @@ app.factory('getUserInfo', ['$http','userInfo', function($http, userInfo){
   }
 }])
 
+// app.factory('userCommands', ['$http', 'userInfo', function($http, userInfo){
+//   return {
+//     runZone: function(zoneId, duration){
+//       return $http.put('https://api.rach.io/1/public/zone/start',
+//       {id: zoneID, duration: duration},
+//       {headers: {'Authorization' : 'Bearer ' + userInfo.token}
+//       })
+//     }
+//   }
+// }])
+
 app.value('userInfo',
 {
   id: '',

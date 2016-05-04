@@ -1,50 +1,43 @@
+
 .header-title {
+  text-align: center;
   color: white;
-}
-
-.zone-card {
-  width: 300px !important;
-  float: left;
-}
-
-.zone-card .mdl-card__title {
-  background-image: url('../images/default_zone.jpg');
-  min-height: 200px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  width: 100%;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.zone-card {
-  overflow: visible;
-}
-
-.droplet-image {
-  width: 50px;
-  display: block;
-}
-
-.zone-text {
-  margin-top: 30px;
-  display: block;
-  font-size: 30pt;
-}
-
-.activity-state {
-  font-size: 16pt;
-}
-
-.run-zone {
   font-size: 20pt;
+}
+
+.card {
+  width: 300px;
+}
+
+.card-image-container {
   position: relative;
 }
 
-.run-time-menu {
-  height: 200px;
-  overflow-y: scroll;
+.droplet-image-container {
+position: absolute;
+top: 15px;
+width: 100%;
+}
+
+.droplet-image {
+  z-index: 1;
+  margin: auto;
+  width: 30px;
+}
+
+.card-zone-text {
+  text-align: center;
+  color: white;
+  font-size: 30pt;
+  margin: 0;
+  margin-top: 10px;
+}
+
+.card-status {
+  color: grey;
+}
+
+.md-card-title {
+  padding: 12px;
+  padding-bottom: 0;
 }
