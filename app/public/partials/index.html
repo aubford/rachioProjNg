@@ -1,32 +1,9 @@
 
-  <md-toolbar class="mdl-layout__header mdl-layout__header">
-      <h1 class="header-title">Rachio Manual Control</h1>
-  </md-toolbar>
+<md-toolbar class="mdl-layout__header mdl-layout__header">
+    <h1 class="header-title">Rachio Manual Control</h1>
+</md-toolbar>
 
-  <!-- <div ng-repeat="zone in zones" class="zone-card mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col">
-
-    <div class="card-main">
-      <img class="droplet-image" src="../images/droplet.png" alt="">
-      <p class="zone-text">Zone 1</p>
-    </div>
-
-    <div class="activity-state mdl-card__supporting-text mdl-color-text--grey-600">
-      Currently Inactive
-    </div>
-
-    <div class="run-zone mdl-card__actions mdl-card--border">
-      <span>Run Zone</span>
-      <button id="{{zone}}" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-        <i class="material-icons" role="presentation">arrow_drop_down</i>
-      </button>
-      <ul class="run-time-menu mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="{{zone}}">
-        <li ng-repeat="duration in durations" class="mdl-menu__item" ng-click="userCommands.runZone(zone, duration)">{{duration===1 ? "1 Minute" : duration > 60 ? duration/60 + " Hours" : duration + " Minutes"}}</li>
-      </ul>
-    </div>
-  </div> -->
-  <md-content layout="column" layout-gt-xs="row" layout-wrap layout-align="center center">
-
-
+<md-content layout="row" layout-wrap layout-align="center center">
 
   <md-card flex="none" ng-repeat="zone in zones" class="card">
           <div class="card-image-container">
@@ -44,12 +21,22 @@
             </md-card-title-text>
           </md-card-title>
           <md-card-actions layout="column" layout-align="start">
-            <md-menu>
-              <md-button>Stop</md-button>
-                
-            </md-menu>
-            <md-button>Activate</md-button>
-          </md-card-actions>
-  </md-card>
+            <md-button>  <md-icon class="material-icons" role="presentation">alarm_off</md-icon></md-button>
+
+          <md-menu>
+            <md-button class="menu-button" ng-click="$mdOpenMenu()">
+              <md-icon class="material-icons" role="presentation">alarm</md-icon>
+            </md-button>
+            <md-menu-content width="4">
+              <md-menu-item ng-repeat="duration in durations">
+                <md-button ng-click="runZone(zone, duration)"></md-button>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
+
+        </md-card-actions>
+
+        </md-card>
+
 
 </md-content>

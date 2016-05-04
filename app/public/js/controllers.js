@@ -1,8 +1,9 @@
-app.controller('IndexController', ['$scope', 'getUserInfo', 'durations', 'userInfo',function($scope, getUserInfo, durations, userInfo){
+app.controller('IndexController', ['$scope', 'getUserInfo', 'durations', 'userInfo', function($scope, getUserInfo, durations, userInfo){
 
     userInfo.token = 'c3667b81-92a6-4913-b83c-64cc713cbc1e'
     $scope.durations  = durations
-    $scope.zones = [789]
+    console.log($scope.durations);
+
 
     getUserInfo.getId().then(function(results){
         userInfo.id = results.data.id
@@ -22,20 +23,16 @@ app.controller('IndexController', ['$scope', 'getUserInfo', 'durations', 'userIn
           })
         })
 
-        // console.log(userInfo.devices[0].zones[0].zid);
         $scope.zones = userInfo.devices[0].zones
 
       })
-})
-
-
-
+    })
 
 
 
 
     $scope.runZone = function(zone,duration){
-      console.log(duration)
+      console.log(zone, duration)
 
 
     }

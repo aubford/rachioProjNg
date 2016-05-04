@@ -4,7 +4,7 @@
   font-size: 20pt;
 }
 .card {
-  width: 300px;
+  width: 250px;
 }
 .card-image-container {
   position: relative;
@@ -32,4 +32,10 @@
 .md-card-title {
   padding: 12px;
   padding-bottom: 0;
+}
+.menu-button {
+  width: 100%;
+}
+md-icon {
+  color: black;
 }
