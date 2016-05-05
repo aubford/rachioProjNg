@@ -9,6 +9,10 @@ var express = require('express');
   var server = http.createServer(app)
   server.listen(port)
 
+  app.post('/incomingNotification', function(req,res){
+    console.log(req.body)
+    
+  })
 
   app.get('/*', function(req, res, next){
    var options = {root: __dirname + '/public'};
@@ -29,4 +33,3 @@ var express = require('express');
     }
     return false
   }
-

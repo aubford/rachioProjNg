@@ -11,7 +11,7 @@
 }
 .droplet-image-container {
   position: absolute;
-  top: 15px;
+  top: 5px;
   width: 100%;
 }
 .droplet-image {
@@ -19,16 +19,33 @@
   margin: auto;
   width: 30px;
 }
-.card-zone-text {
+.card-device-text {
   text-align: center;
   color: white;
-  font-size: 30pt;
+  font-size: 18pt;
+  font-weight: bold;
   margin: 0;
   margin-top: 10px;
 }
-.card-status {
-  color: grey;
+
+.status-text-inactive {
+  color: gray;
+  font-size: 14pt;
 }
+
+.status-text-active {
+  color: blue;
+  font-size: 14pt;
+}
+
+.card-zone-text {
+  text-align: center;
+  color: orange;
+  font-size: 16pt;
+  margin: 0;
+  /*margin-top: 10px;*/
+}
+
 .md-card-title {
   padding: 12px;
   padding-bottom: 0;
