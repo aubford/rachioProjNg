@@ -1,4 +1,4 @@
-app.controller('IndexController', ['$scope', 'Durations', 'UserInfo', 'GetUserInfo', 'UserCommands', function($scope, Durations, UserInfo, GetUserInfo, UserCommands) {
+app.controller('IndexController', ['$scope', '$http','Durations', 'UserInfo', 'GetUserInfo', 'UserCommands', 'socket', function($scope, $http, Durations, UserInfo, GetUserInfo, UserCommands, socket) {
 
     UserInfo.token = 'c3667b81-92a6-4913-b83c-64cc713cbc1e'
     $scope.durations = Durations
@@ -12,6 +12,10 @@ app.controller('IndexController', ['$scope', 'Durations', 'UserInfo', 'GetUserIn
             var zones = []
 
             devices.forEach(function(device) {
+                  console.log(device);
+
+                socket.emit('joinDeviceRoom', {deviceId: device.id})
+                socket.emit('testRoom', {deviceId:device.id})
 
                 GetUserInfo.getWebhooks(device.id).then(function(getWebhooksResponse){
                   var webhooks = getWebhooksResponse.data
@@ -19,15 +23,28 @@ app.controller('IndexController', ['$scope', 'Durations', 'UserInfo', 'GetUserIn
 
                   webhooks.forEach(function(webhook){
 
+                    // console.log(webhook);
+
                     if(webhook.externalId === "AubreyApp"+device.id){
                       webhookAlreadyInPlace = true
                     }
+
+                    // /////////////DELETE ALL WEBHOOKS  TODO:Remove
+                    // $http.delete('https://api.rach.io/1/public/notification/webhook/'+ webhook.id, {
+                    //     headers: {
+                    //         'Authorization': 'Bearer ' + UserInfo.token
+                    //     }
+                    // })
+                    // //////////////
+
                   })
 
+                  // console.log(webhookAlreadyInPlace);
 
                   if(!webhookAlreadyInPlace){
-                    GetUserInfo.setWebhooks(device.id).then(function(setWebhooksResponse){
-                      // UserInfo.webhookId = setWebhooksResponse.id
+
+                    GetUserInfo.setWebHook(device.id).then(function(setWebHookResponse){
+                      // UserInfo.webhookId = setWebHookResponse.id
                     })
                   }
                 })
@@ -45,6 +62,14 @@ app.controller('IndexController', ['$scope', 'Durations', 'UserInfo', 'GetUserIn
 
                     })
                 })
+
+                GetUserInfo.initializeZoneStatus(device.id).then(function(zoneStatusResponse){
+                  // console.log(zoneStatusResponse);
+                  zones.forEach(function(zone){
+                    // TODO: Loop and determine statuses and display them.
+                  })
+                })
+
             })
 
             zones.sort(function(a,b){
@@ -60,7 +85,16 @@ app.controller('IndexController', ['$scope', 'Durations', 'UserInfo', 'GetUserIn
         })
     })
 
+    //TODO: Remove
+    socket.on('testRoomRes', function(res){
+      console.log("TESTROOMRESOK");
+    })
 
+
+    socket.on('notification', function(notification){
+      console.log("notification received in controller");
+      //TODO: Activate/Deactivate corresponding card.
+    })
 
 
     $scope.runZone = function(zone, duration, index) {
@@ -68,9 +102,7 @@ app.controller('IndexController', ['$scope', 'Durations', 'UserInfo', 'GetUserIn
         $scope.zones[index].status = "Watering for "+duration+" Minutes"
         $scope.zones[index].statusStyle = "status-text-active"
 
-        UserCommands.runZone(zone.id, durationInSeconds).then(function(results) {
-            console.log(results);
-        })
+        UserCommands.runZone(zone.id, durationInSeconds).then(function(results) {})
     }
 
 

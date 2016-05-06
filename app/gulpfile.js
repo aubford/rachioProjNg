@@ -1,5 +1,6 @@
 var gulp = require('gulp')
 var less = require('gulp-less')
+var nodemon = require('gulp-nodemon')
 
 
 gulp.task('compile-less', function(){
@@ -12,4 +13,8 @@ gulp.task('watch-less', function(){
   gulp.watch('./public/css/*.less', ['compile-less'])
 })
 
-gulp.task('default', ['compile-less', 'watch-less'])
+gulp.task('nodemon', function(){
+  nodemon()
+})
+
+gulp.task('default', ['compile-less', 'watch-less', 'nodemon'])

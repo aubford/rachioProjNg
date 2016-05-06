@@ -1,4 +1,4 @@
-var express = require('express');
+  var express = require('express');
   var logger = require('morgan');
   var app = express();
   app.use(logger('dev'));
@@ -8,11 +8,32 @@ var express = require('express');
   app.set('port', port)
   var server = http.createServer(app)
   server.listen(port)
+  var io = require('socket.io')(server)
 
-  app.post('/incomingNotification', function(req,res){
-    console.log(req.body)
-    
+
+  io.on('connection', function(socket){
+    console.log("connection");
+
+    socket.on('joinDeviceRoom', function(res){
+      socket.join(res.deviceId)
+    })
+
+    //TODO:Remove
+    socket.on('testRoom', function(res){
+      io.to(res.deviceId).emit('testRoomRes', {})
+    })
+
   })
+
+
+
+  app.post('/', function(req,res){
+    console.log("incoming notification",req.body);
+    //TODO: Check the to() input is the device ID
+    io.to(req.body.device.id).emit('notification', {})
+
+  })
+
 
   app.get('/*', function(req, res, next){
    var options = {root: __dirname + '/public'};
