@@ -12,7 +12,6 @@
 
 
   io.on('connection', function(socket){
-    console.log("connection");
 
     socket.on('joinDeviceRoom', function(res){
       socket.join(res.deviceId)

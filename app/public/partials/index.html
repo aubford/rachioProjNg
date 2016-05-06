@@ -1,11 +1,11 @@
-<md-toolbar class="mdl-layout__header mdl-layout__header">
-    <h1 class="header-title">{{userName}}'s Rachio Remote</h1>
+<md-toolbar class="mdl-layout__header mdl-layout__header" layout="column" >
 
-    <md-content layout="row">
-        <md-menu>
-            <md-button class="menu-button" ng-click="$mdOpenMenu()">
-                  Activate All Zones
-                  <md-divider></md-divider>
+    <h1 class="header-title">{{userName}}'s Rachio Remote</h1>
+    <md-content layout="row" >
+        <md-menu flex="50" layout-align="end" layout="row">
+            <md-button class="header-button" ng-click="$mdOpenMenu()">
+                Activate All Zones
+                <md-divider></md-divider>
                 <md-icon class="material-icons" role="presentation">alarm</md-icon>
             </md-button>
             <md-menu-content width="4">
@@ -15,10 +15,10 @@
             </md-menu-content>
         </md-menu>
 
-        <md-menu>
-            <md-button class="menu-button" ng-click="$mdOpenMenu()">
-              Pause All Zones
-              <md-divider md-inset></md-divider>
+        <md-menu flex="50" layout-align="start" layout="row">
+            <md-button class="header-button" ng-click="$mdOpenMenu()">
+                Pause All Zones
+                <md-divider></md-divider>
                 <md-icon class="material-icons" role="presentation">alarm_off</md-icon>
             </md-button>
             <md-menu-content width="4">
@@ -53,7 +53,6 @@
             </md-card-title-text>
         </md-card-title>
         <md-card-actions layout="column" layout-align="start">
-            
 
             <md-menu>
                 <md-button class="menu-button" ng-click="$mdOpenMenu()">

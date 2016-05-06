@@ -3,6 +3,9 @@
   color: white;
   font-size: 20pt;
 }
+.header-button {
+  width: 200px;
+}
 .card {
   width: 250px;
 }
