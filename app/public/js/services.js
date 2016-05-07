@@ -1,6 +1,6 @@
 app.factory('GetUserInfo', ['$http', 'UserInfo', function($http, UserInfo) {
 
-    var WEBHOOK_URL = "http://30b3a65d.ngrok.io"
+    var WEBHOOK_URL = "http://b9192af7.ngrok.io"
 
     return {
         getId: function() {
@@ -32,8 +32,6 @@ app.factory('GetUserInfo', ['$http', 'UserInfo', function($http, UserInfo) {
                 externalId: "AubreyApp" + deviceId,
                 url: WEBHOOK_URL,
                 eventTypes: [{
-                    id: "5"
-                }, {
                     id: "10"
                 }]
             }, {
@@ -44,7 +42,7 @@ app.factory('GetUserInfo', ['$http', 'UserInfo', function($http, UserInfo) {
         },
         initializeZoneStatus: function(deviceId) {
             var now = Number(new Date())
-            var hourAgo = Number(new Date()) - (3600000) //TODO:Change this to 12 hours
+            var hourAgo = Number(new Date()) - (3600000 * 4) //TODO:Change this to 12 hours
 
             return $http.get("https://api.rach.io/1/public/device/" + deviceId + "/event?startTime=" + hourAgo + "&endTime=" + now, {
                 headers: {
@@ -66,10 +64,14 @@ app.factory('UserCommands', ['$http', 'UserInfo', function($http, UserInfo) {
                     'Authorization': 'Bearer ' + UserInfo.token
                 }
             })
+        },
+        runAll: function(zones){
+            return $http.put("https://api.rach.io/1/public/zone/start_multiple", zones, {
+                headers: {
+                    'Authorization': 'Bearer ' + UserInfo.token
+                }
+            })
         }
-
-
-
     }
 }])
 
@@ -105,8 +107,7 @@ app.factory('socket', ["$rootScope", function($rootScope) {
 app.value('UserInfo', {
     id: '',
     token: '',
-    zones: [],
-    webhookId: ''
+    zones: []
 })
 
 app.value('Durations', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 60, 120, 180])

@@ -1,8 +1,8 @@
-<md-toolbar class="mdl-layout__header mdl-layout__header" layout="column" >
+<md-toolbar class="mdl-layout__header" layout="column" >
 
     <h1 class="header-title">{{userName}}'s Rachio Remote</h1>
     <md-content layout="row" >
-        <md-menu flex="50" layout-align="end" layout="row">
+        <md-menu flex layout-align="center center"= layout="row">
             <md-button class="header-button" ng-click="$mdOpenMenu()">
                 Activate All Zones
                 <md-divider></md-divider>
@@ -10,12 +10,12 @@
             </md-button>
             <md-menu-content width="4">
                 <md-menu-item ng-repeat="duration in durations">
-                    <md-button ng-click="runZone(zone, duration, $parent.$index)">{{duration===1 ? "1 Minute" : duration >= 60 ? duration/60 + (duration === 60 ? " Hour" : " Hours") : duration + " Minutes"}}</md-button>
+                    <md-button ng-click="runAll(duration)">{{duration===1 ? "1 Minute" : duration >= 60 ? duration/60 + (duration === 60 ? " Hour" : " Hours") : duration + " Minutes"}}</md-button>
                 </md-menu-item>
             </md-menu-content>
         </md-menu>
 
-        <md-menu flex="50" layout-align="start" layout="row">
+        <!-- <md-menu flex="50" layout-align="start" layout="row">
             <md-button class="header-button" ng-click="$mdOpenMenu()">
                 Pause All Zones
                 <md-divider></md-divider>
@@ -26,7 +26,7 @@
                     <md-button ng-click="runZone(zone, duration, $parent.$index)">{{duration===1 ? "1 Minute" : duration >= 60 ? duration/60 + (duration === 60 ? " Hour" : " Hours") : duration + " Minutes"}}</md-button>
                 </md-menu-item>
             </md-menu-content>
-        </md-menu>
+        </md-menu> -->
 
     </md-content>
 
@@ -35,6 +35,7 @@
 <md-content layout="row" layout-wrap layout-align="center center">
 
     <md-card flex="none" ng-repeat="zone in zones" class="card">
+
         <div class="card-image-container">
             <img ng-src="../images/default_zone.jpg" class="md-card-image card-image">
             <div class="droplet-image-container">
@@ -70,25 +71,3 @@
     </md-card>
 
 </md-content>
-
-<!-- <div ng-repeat="zone in zones" class="zone-card mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col">
-
-  <div class="card-main">
-    <img class="droplet-image" src="../images/droplet.png" alt="">
-    <p class="zone-text">Zone 1</p>
-  </div>
-
-  <div class="activity-state mdl-card__supporting-text mdl-color-text--grey-600">
-    Currently Inactive
-  </div>
-
-  <div class="run-zone mdl-card__actions mdl-card--border">
-    <span>Run Zone</span>
-    <button id="{{zone}}" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-      <i class="material-icons" role="presentation">arrow_drop_down</i>
-    </button>
-    <ul class="run-time-menu mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="{{zone}}">
-      <li ng-repeat="duration in durations" class="mdl-menu__item" ng-click="userCommands.runZone(zone, duration)">{{duration===1 ? "1 Minute" : duration > 60 ? duration/60 + " Hours" : duration + " Minutes"}}</li>
-    </ul>
-  </div>
-</div> -->

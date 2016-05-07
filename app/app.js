@@ -24,13 +24,16 @@
 
   })
 
-
-
   app.post('/', function(req,res){
-    console.log("incoming notification",req.body);
-    //TODO: Check the to() input is the device ID
-    io.to(req.body.device.id).emit('notification', {})
+  
 
+    //TODO:Replace with real info
+    var deviceId = "c761bfa0-4c49-4b4f-8a79-04e42bea881a"
+    var zoneId = "ad9f83be-8a6c-47ad-af40-8300557c3355"
+    var status = "ZONE_STARTED"
+    var summary = "Watering Zone 6 for 1 minutes"
+
+    io.to(deviceId).emit('notification', {status:status,zoneId:zoneId, summary:summary})
   })
 
 
