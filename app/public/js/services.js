@@ -64,13 +64,6 @@ app.factory('UserCommands', ['$http', 'UserInfo', function($http, UserInfo) {
                     'Authorization': 'Bearer ' + UserInfo.token
                 }
             })
-        },
-        runAll: function(zones){
-            return $http.put("https://api.rach.io/1/public/zone/start_multiple", zones, {
-                headers: {
-                    'Authorization': 'Bearer ' + UserInfo.token
-                }
-            })
         }
     }
 }])

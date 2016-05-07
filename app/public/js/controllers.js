@@ -160,24 +160,5 @@ app.controller('IndexController', ['$scope', '$http', 'Durations', 'UserInfo', '
         UserCommands.runZone(zone.id, durationInSeconds)
     }
 
-    $scope.runAll = function(duration){
-      var zones = []
-      var sortOrder = 1
-      var durationInSeconds = duration * 60
-
-      UserInfo.zones.forEach(function(zone){
-          zones.push({id:zone.id, duration: durationInSeconds, sortOrder: sortOrder})
-      })
-
-      console.log(zones);
-
-
-      UserCommands.runAll({zones : [{id: "ad9f83be-8a6c-47ad-af40-8300557c3355", duration: "180", sortOrder: "1"}]}).then(function(res){
-        console.log(res);
-      })
-
-    }
-
-
 
 }])

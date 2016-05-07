@@ -1,35 +1,7 @@
 <md-toolbar class="mdl-layout__header" layout="column" >
 
     <h1 class="header-title">{{userName}}'s Rachio Remote</h1>
-    <md-content layout="row" >
-        <md-menu flex layout-align="center center"= layout="row">
-            <md-button class="header-button" ng-click="$mdOpenMenu()">
-                Activate All Zones
-                <md-divider></md-divider>
-                <md-icon class="material-icons" role="presentation">alarm</md-icon>
-            </md-button>
-            <md-menu-content width="4">
-                <md-menu-item ng-repeat="duration in durations">
-                    <md-button ng-click="runAll(duration)">{{duration===1 ? "1 Minute" : duration >= 60 ? duration/60 + (duration === 60 ? " Hour" : " Hours") : duration + " Minutes"}}</md-button>
-                </md-menu-item>
-            </md-menu-content>
-        </md-menu>
-
-        <!-- <md-menu flex="50" layout-align="start" layout="row">
-            <md-button class="header-button" ng-click="$mdOpenMenu()">
-                Pause All Zones
-                <md-divider></md-divider>
-                <md-icon class="material-icons" role="presentation">alarm_off</md-icon>
-            </md-button>
-            <md-menu-content width="4">
-                <md-menu-item ng-repeat="duration in durations">
-                    <md-button ng-click="runZone(zone, duration, $parent.$index)">{{duration===1 ? "1 Minute" : duration >= 60 ? duration/60 + (duration === 60 ? " Hour" : " Hours") : duration + " Minutes"}}</md-button>
-                </md-menu-item>
-            </md-menu-content>
-        </md-menu> -->
-
-    </md-content>
-
+  
 </md-toolbar>
 
 <md-content layout="row" layout-wrap layout-align="center center">
