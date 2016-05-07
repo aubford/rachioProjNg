@@ -1,6 +1,6 @@
 app.factory('GetUserInfo', ['$http', 'UserInfo', function($http, UserInfo) {
 
-    var WEBHOOK_URL = "http://b9192af7.ngrok.io"
+    var WEBHOOK_URL = "https://rachio-manual-control.herokuapp.com"
 
     return {
         getId: function() {

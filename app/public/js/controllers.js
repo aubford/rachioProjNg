@@ -1,6 +1,6 @@
 app.controller('IndexController', ['$scope', '$http', 'Durations', 'UserInfo', 'GetUserInfo', 'UserCommands', 'socket', function($scope, $http, Durations, UserInfo, GetUserInfo, UserCommands, socket) {
 
-    UserInfo.token = 'c3667b81-92a6-4913-b83c-64cc713cbc1e'
+    // UserInfo.token = 'c3667b81-92a6-4913-b83c-64cc713cbc1e'
     $scope.durations = Durations
 
     GetUserInfo.getId().then(function(userResults) {
@@ -27,26 +27,12 @@ app.controller('IndexController', ['$scope', '$http', 'Durations', 'UserInfo', '
 
                     webhooks.forEach(function(webhook) {
 
-
-
                         if (webhook.externalId === "AubreyApp" + device.id) {
                             webhookAlreadyInPlace = true
                         }
-
-                        // /////////////DELETE ALL WEBHOOKS  TODO:Remove
-                        // $http.delete('https://api.rach.io/1/public/notification/webhook/'+ webhook.id, {
-                        //     headers: {
-                        //         'Authorization': 'Bearer ' + UserInfo.token
-                        //     }
-                        // })
-                        // //////////////
-
                     })
 
-
-
                     if (!webhookAlreadyInPlace) {
-
                         GetUserInfo.setWebHook(device.id).then(function(setWebHookResponse) {})
                     }
                 })
@@ -73,7 +59,7 @@ app.controller('IndexController', ['$scope', '$http', 'Durations', 'UserInfo', '
                         var latestEvent = 0
 
 
-                        for(var i = 0; i < zoneStatusResponse.data.length; i++){
+                        for (var i = 0; i < zoneStatusResponse.data.length; i++) {
                             var eventInfo = zoneStatusResponse.data[i]
 
                             var eventZoneId
@@ -94,16 +80,15 @@ app.controller('IndexController', ['$scope', '$http', 'Durations', 'UserInfo', '
                             }
                         }
 
-                        if(isActive){
-                          zone.status = summary
-                          zone.statusStyle = "status-text-active"
-                        }else{
-                          zone.status = "Inactive"
-                          zone.statusStyle = "status-text-inactive"
+                        if (isActive) {
+                            zone.status = summary
+                            zone.statusStyle = "status-text-active"
+                        } else {
+                            zone.status = "Inactive"
+                            zone.statusStyle = "status-text-inactive"
                         }
 
                     })
-
                 })
             })
 
@@ -119,12 +104,6 @@ app.controller('IndexController', ['$scope', '$http', 'Durations', 'UserInfo', '
             $scope.zones = UserInfo.zones
         })
     })
-
-    //TODO: Remove
-    socket.on('testRoomRes', function(res) {
-        // console.log("TESTROOMRESOK******");
-    })
-
 
     socket.on('notification', function(notification) {
 
@@ -160,5 +139,17 @@ app.controller('IndexController', ['$scope', '$http', 'Durations', 'UserInfo', '
         UserCommands.runZone(zone.id, durationInSeconds)
     }
 
+
+}])
+
+
+app.controller('LoginController', ['$scope', 'UserInfo','$window', function($scope, UserInfo, $window){
+
+$scope.login = function(){
+  UserInfo.token = $scope.apiKey
+  $window.location.href = "#/manual"
+}
+
+console.log(UserInfo.token);
 
 }])

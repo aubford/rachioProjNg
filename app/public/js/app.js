@@ -4,6 +4,10 @@ var app = angular.module('appApp', ['ngRoute', 'ngAnimate', 'ngMaterial', 'ngAri
 		app.config(function($routeProvider, $mdThemingProvider) {
 			$routeProvider
 				.when('/', {
+					templateUrl: '../partials/login.html',
+					controller: 'LoginController'
+				})
+				.when('/manual', {
 					templateUrl: '../partials/index.html',
 					controller: 'IndexController'
 				})

@@ -10,49 +10,65 @@
   server.listen(port)
   var io = require('socket.io')(server)
 
+  var bodyParser = require('body-parser')
+  app.use(bodyParser.json())
+  app.use(bodyParser.urlencoded({ extended: true }))
 
-  io.on('connection', function(socket){
 
-    socket.on('joinDeviceRoom', function(res){
-      socket.join(res.deviceId)
-    })
+  io.on('connection', function(socket) {
 
-    //TODO:Remove
-    socket.on('testRoom', function(res){
-      io.to(res.deviceId).emit('testRoomRes', {})
-    })
+      socket.on('joinDeviceRoom', function(res) {
+          socket.join(res.deviceId)
+      })
 
   })
 
-  app.post('/', function(req,res){
-  
+  app.post('/', function(req, res) {
 
-    //TODO:Replace with real info
-    var deviceId = "c761bfa0-4c49-4b4f-8a79-04e42bea881a"
-    var zoneId = "ad9f83be-8a6c-47ad-af40-8300557c3355"
-    var status = "ZONE_STARTED"
-    var summary = "Watering Zone 6 for 1 minutes"
+      var zoneId
 
-    io.to(deviceId).emit('notification', {status:status,zoneId:zoneId, summary:summary})
+      req.body.eventDatas.forEach(function(event){
+        if(event.key === "zoneId"){
+          console.log(event);
+          zoneId = event.convertedValue
+        }
+
+      })
+
+      var deviceId = req.body.deviceId
+      var status = req.body.subType
+      var summary = req.body.summary
+
+      console.log(zoneId)
+      console.log(status)
+      console.log(summary)
+
+      io.to(deviceId).emit('notification', {
+          status: status,
+          zoneId: zoneId,
+          summary: summary
+      })
   })
 
 
-  app.get('/*', function(req, res, next){
-   var options = {root: __dirname + '/public'};
+  app.get('/*', function(req, res, next) {
+      var options = {
+          root: __dirname + '/public'
+      };
 
-   res.sendFile('index.html', options, function(err){
-     if(err) return next(err);
-   })
+      res.sendFile('index.html', options, function(err) {
+          if (err) return next(err);
+      })
   });
 
   function normalizePort(val) {
-    var port = parseInt(val, 10)
+      var port = parseInt(val, 10)
 
-    if (isNaN(port)) {
-      return val
-    }
-    if (port >= 0) {
-      return port
-    }
-    return false
+      if (isNaN(port)) {
+          return val
+      }
+      if (port >= 0) {
+          return port
+      }
+      return false
   }

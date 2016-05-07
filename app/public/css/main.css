@@ -55,3 +55,12 @@
 md-icon {
   color: black;
 }
+.loginContent {
+  height: 80vh;
+}
+.loginBox {
+  width: 350px;
+}
+.stretch input {
+  width: 100%;
+}
