@@ -1,4 +1,4 @@
-var app = angular.module('appApp', ['ngRoute', 'ngAnimate', 'ngMaterial', 'ngAria', 'ngMessages'])
+var app = angular.module('appApp', ['ngRoute', 'ngAnimate', 'ngMaterial', 'ngAria', 'ngMessages', 'ngCookies'])
 
 
 		app.config(function($routeProvider, $mdThemingProvider) {

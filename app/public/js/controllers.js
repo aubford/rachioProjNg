@@ -1,7 +1,8 @@
-app.controller('IndexController', ['$scope', '$http', 'Durations', 'UserInfo', 'GetUserInfo', 'UserCommands', 'socket', function($scope, $http, Durations, UserInfo, GetUserInfo, UserCommands, socket) {
+app.controller('IndexController', ['$scope', '$http', 'Durations', 'UserInfo', 'GetUserInfo', 'UserCommands', 'socket', '$cookies', function($scope, $http, Durations, UserInfo, GetUserInfo, UserCommands, socket, $cookies) {
 
-    // UserInfo.token = 'c3667b81-92a6-4913-b83c-64cc713cbc1e'
     $scope.durations = Durations
+    UserInfo.token = $cookies.get('token')
+
 
     GetUserInfo.getId().then(function(userResults) {
         UserInfo.id = userResults.data.id
@@ -143,10 +144,12 @@ app.controller('IndexController', ['$scope', '$http', 'Durations', 'UserInfo', '
 }])
 
 
-app.controller('LoginController', ['$scope', 'UserInfo','$window', function($scope, UserInfo, $window){
+app.controller('LoginController', ['$scope', 'UserInfo','$window', '$cookies', function($scope, UserInfo, $window, $cookies){
 
 $scope.login = function(){
-  UserInfo.token = $scope.apiKey
+
+  $cookies.put('token', $scope.apiKey)
+
   $window.location.href = "#/manual"
 }
 

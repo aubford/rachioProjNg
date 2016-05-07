@@ -64,6 +64,15 @@ app.factory('UserCommands', ['$http', 'UserInfo', function($http, UserInfo) {
                     'Authorization': 'Bearer ' + UserInfo.token
                 }
             })
+        },
+        setCookie: function(apiKey){
+          return $http.post('/setCookie', {apiKey:apiKey})
+        },
+        removeCookie: function(){
+          return $http.post('/removeCookie')
+        },
+        getCookie: function(){
+          return $http.get('/getCookie')
         }
     }
 }])

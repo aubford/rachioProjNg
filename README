@@ -1,0 +1,16 @@
+<b>Rachio Remote</b>
+<br>
+
+Rachio Remote is an app for implementing the manual remote control feature of the extremely awesome IOT sprinkler control product Rachio (http://rachio.com).  Once the user has logged in with their API key, the page is populated with all of the control zones for each of their Rachio devices.  The user can then activate any zones to water that section of their property for an amount of time.  The highlight feature of this app is its use of webhooks to populate each zone's indicator.  By setting the webhooks all of the information the user sees comes directly from the Rachio API, making it perfectly reliable, given that the API is functioning correctly.  The webhook causes the API to send notifications to the app whenever pertinent events occur, and the app indicates that data accordingly.  If another user starts a zone, the user would immediately see that zone's indicator display that it is now watering for the set amount of time.  If the user navigates to the page and a zone is watering, or if they reload the page and the same is true, they would see that zone indicating that data.  The app uses AngularJS and the Angular-Material UI framework.
+<br>
+
+You can check out the app at https://rachio-manual-control.herokuapp.com
+<br>
+
+To Start:
+<br>
+
+<code>npm install </code>
+<br>
+
+<code>gulp</code>

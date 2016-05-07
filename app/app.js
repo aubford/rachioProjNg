@@ -2,7 +2,7 @@
   var logger = require('morgan');
   var app = express();
   app.use(logger('dev'));
-  app.use(express.static('public'));
+  app.use(express.static('public'))
   var http = require('http')
   var port = normalizePort(process.env.PORT || '3000')
   app.set('port', port)
@@ -20,7 +20,6 @@
       socket.on('joinDeviceRoom', function(res) {
           socket.join(res.deviceId)
       })
-
   })
 
   app.post('/', function(req, res) {
