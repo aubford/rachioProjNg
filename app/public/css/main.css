@@ -64,3 +64,6 @@ md-icon {
 .stretch input {
   width: 100%;
 }
+.validate {
+  color: red;
+}

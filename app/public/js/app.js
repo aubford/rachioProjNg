@@ -5,7 +5,14 @@ var app = angular.module('appApp', ['ngRoute', 'ngAnimate', 'ngMaterial', 'ngAri
 			$routeProvider
 				.when('/', {
 					templateUrl: '../partials/login.html',
-					controller: 'LoginController'
+					controller: 'LoginController',
+					resolve: {
+						check: function($location, $cookies){
+							if($cookies.get('id')){
+								$location.path('/manual')
+							}
+						}
+					}
 				})
 				.when('/manual', {
 					templateUrl: '../partials/index.html',

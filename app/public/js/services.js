@@ -3,10 +3,10 @@ app.factory('GetUserInfo', ['$http', 'UserInfo', function($http, UserInfo) {
     var WEBHOOK_URL = "https://rachio-manual-control.herokuapp.com"
 
     return {
-        getId: function() {
+        getId: function(token) {
             return $http.get('https://api.rach.io/1/public/person/info', {
                 headers: {
-                    'Authorization': 'Bearer ' + UserInfo.token
+                    'Authorization': 'Bearer ' + token
                 }
             })
         },
@@ -107,7 +107,6 @@ app.factory('socket', ["$rootScope", function($rootScope) {
 
 
 app.value('UserInfo', {
-    id: '',
     token: '',
     zones: []
 })

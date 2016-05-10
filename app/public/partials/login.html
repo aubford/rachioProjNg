@@ -14,7 +14,8 @@
             <md-content layout="column" class="md-padding">
                 <md-input-container>
                     <label>Api Key</label>
-                    <input ng-model="apiKey"/>
+                    <input ng-model="apiKey" required/>
+                    <p ng-show="validate" class='validate'>That Api key is not valid.</p>
                 </md-input-container>
                 <div layout="row" layout-align="center center" style="padding-top:20px;">
                     <md-button class="md-raised md-primary" ng-click="login()">Login</md-button>

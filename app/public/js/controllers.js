@@ -1,110 +1,108 @@
-app.controller('IndexController', ['$scope', '$http', 'Durations', 'UserInfo', 'GetUserInfo', 'UserCommands', 'socket', '$cookies', function($scope, $http, Durations, UserInfo, GetUserInfo, UserCommands, socket, $cookies) {
+app.controller('IndexController', ['$scope', '$http', '$window', 'Durations', 'UserInfo', 'GetUserInfo', 'UserCommands', 'socket', '$cookies', function($scope, $http, $window, Durations, UserInfo, GetUserInfo, UserCommands, socket, $cookies) {
 
     $scope.durations = Durations
+    UserInfo.id = $cookies.get('id')
     UserInfo.token = $cookies.get('token')
 
 
-    GetUserInfo.getId().then(function(userResults) {
-        UserInfo.id = userResults.data.id
+    GetUserInfo.getUserAndHardwareInfo(UserInfo.id).then(function(hardwareResults) {
+        $scope.userName = hardwareResults.data.fullName
+        var devices = hardwareResults.data.devices
+        var zones = []
 
-        GetUserInfo.getUserAndHardwareInfo(UserInfo.id).then(function(hardwareResults) {
-            $scope.userName = hardwareResults.data.fullName
-            var devices = hardwareResults.data.devices
-            var zones = []
-
-            devices.forEach(function(device) {
+        devices.forEach(function(device) {
 
 
-                socket.emit('joinDeviceRoom', {
-                    deviceId: device.id
-                })
-                socket.emit('testRoom', {
-                    deviceId: device.id
-                })
+            socket.emit('joinDeviceRoom', {
+                deviceId: device.id
+            })
+            socket.emit('testRoom', {
+                deviceId: device.id
+            })
 
-                GetUserInfo.getWebhooks(device.id).then(function(getWebhooksResponse) {
-                    var webhooks = getWebhooksResponse.data
-                    var webhookAlreadyInPlace = false
+            GetUserInfo.getWebhooks(device.id).then(function(getWebhooksResponse) {
+                var webhooks = getWebhooksResponse.data
+                var webhookAlreadyInPlace = false
 
-                    webhooks.forEach(function(webhook) {
+                webhooks.forEach(function(webhook) {
 
-                        if (webhook.externalId === "AubreyApp" + device.id) {
-                            webhookAlreadyInPlace = true
-                        }
-                    })
-
-                    if (!webhookAlreadyInPlace) {
-                        GetUserInfo.setWebHook(device.id).then(function(setWebHookResponse) {})
+                    if (webhook.externalId === "AubreyApp" + device.id) {
+                        webhookAlreadyInPlace = true
                     }
                 })
 
-
-                device.zones.forEach(function(zone) {
-
-                    zones.push({
-                        id: zone.id,
-                        name: zone.name,
-                        deviceName: device.name,
-                        deviceId: device.id,
-                        status: 'Inactive',
-                        statusStyle: "status-text-inactive"
-                    })
-                })
-
-                GetUserInfo.initializeZoneStatus(device.id).then(function(zoneStatusResponse) {
-
-                    zones.forEach(function(zone) {
-
-                        var summary
-                        var isActive = false
-                        var latestEvent = 0
+                if (!webhookAlreadyInPlace) {
+                    GetUserInfo.setWebHook(device.id).then(function(setWebHookResponse) {})
+                }
+            })
 
 
-                        for (var i = 0; i < zoneStatusResponse.data.length; i++) {
-                            var eventInfo = zoneStatusResponse.data[i]
+            device.zones.forEach(function(zone) {
 
-                            var eventZoneId
-
-
-                            var eventDatas = eventInfo.eventDatas
-                            for (var data in eventDatas) {
-                                if (eventDatas[data]["key"] === "zoneId") {
-                                    eventZoneId = eventDatas[data]["convertedValue"]
-                                }
-                            }
-
-                            if (eventInfo.type === "ZONE_STATUS" && eventZoneId === zone.id && eventInfo.lastUpdateDate > latestEvent) {
-
-                                latestEvent = eventInfo.lastUpdateDate
-                                summary = eventInfo.summary
-                                eventInfo.subType === "ZONE_STARTED" ? isActive = true : isActive = false
-                            }
-                        }
-
-                        if (isActive) {
-                            zone.status = summary
-                            zone.statusStyle = "status-text-active"
-                        } else {
-                            zone.status = "Inactive"
-                            zone.statusStyle = "status-text-inactive"
-                        }
-
-                    })
+                zones.push({
+                    id: zone.id,
+                    name: zone.name,
+                    deviceName: device.name,
+                    deviceId: device.id,
+                    status: 'Inactive',
+                    statusStyle: "status-text-inactive"
                 })
             })
 
-            zones.sort(function(a, b) {
-                var keyA = a.name
-                var keyB = b.name
-                if (keyA < keyB) return -1
-                if (keyB < keyA) return 1
-                return 0
-            })
+            GetUserInfo.initializeZoneStatus(device.id).then(function(zoneStatusResponse) {
 
-            UserInfo.zones = zones
-            $scope.zones = UserInfo.zones
+                zones.forEach(function(zone) {
+
+                    var summary
+                    var isActive = false
+                    var latestEvent = 0
+
+
+                    for (var i = 0; i < zoneStatusResponse.data.length; i++) {
+                        var eventInfo = zoneStatusResponse.data[i]
+
+                        var eventZoneId
+
+
+                        var eventDatas = eventInfo.eventDatas
+                        for (var data in eventDatas) {
+                            if (eventDatas[data]["key"] === "zoneId") {
+                                eventZoneId = eventDatas[data]["convertedValue"]
+                            }
+                        }
+
+                        if (eventInfo.type === "ZONE_STATUS" && eventZoneId === zone.id && eventInfo.lastUpdateDate > latestEvent) {
+
+                            latestEvent = eventInfo.lastUpdateDate
+                            summary = eventInfo.summary
+                            eventInfo.subType === "ZONE_STARTED" ? isActive = true : isActive = false
+                        }
+                    }
+
+                    if (isActive) {
+                        zone.status = summary
+                        zone.statusStyle = "status-text-active"
+                    } else {
+                        zone.status = "Inactive"
+                        zone.statusStyle = "status-text-inactive"
+                    }
+
+                })
+            })
         })
+
+        zones.sort(function(a, b) {
+            var keyA = a.name
+            var keyB = b.name
+            if (keyA < keyB) return -1
+            if (keyB < keyA) return 1
+            return 0
+        })
+
+        UserInfo.zones = zones
+        $scope.zones = UserInfo.zones
     })
+
 
     socket.on('notification', function(notification) {
 
@@ -140,19 +138,29 @@ app.controller('IndexController', ['$scope', '$http', 'Durations', 'UserInfo', '
         UserCommands.runZone(zone.id, durationInSeconds)
     }
 
+    $scope.logout = function() {
+        $window.location.href = "/"
+        $cookies.remove("id")
+        $cookies.remove("token")
+    }
+
 
 }])
 
 
-app.controller('LoginController', ['$scope', 'UserInfo','$window', '$cookies', function($scope, UserInfo, $window, $cookies){
+app.controller('LoginController', ['$scope', 'UserInfo', '$window', '$cookies', 'GetUserInfo', function($scope, UserInfo, $window, $cookies, GetUserInfo) {
 
-$scope.login = function(){
+    $scope.login = function() {
+        $scope.validate = false
 
-  $cookies.put('token', $scope.apiKey)
+        GetUserInfo.getId($scope.apiKey).then(function successCallback(userResults) {
+            $cookies.put('id', userResults.data.id)
+            $cookies.put('token', $scope.apiKey)
+            $window.location.href = "#/manual"
 
-  $window.location.href = "#/manual"
-}
-
-console.log(UserInfo.token);
+        }, function errorCallback(response) {
+            $scope.validate = true
+        })
+    }
 
 }])

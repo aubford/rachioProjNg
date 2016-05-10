@@ -1,7 +1,9 @@
-<md-toolbar class="mdl-layout__header" layout="column" >
+<md-toolbar class="mdl-layout__header" layout="row" layout-align="center center" >
 
-    <h1 class="header-title">{{userName}}'s Rachio Remote</h1>
-  
+    <h1 flex="80" flex-offset="10" class="header-title">{{userName}}'s Rachio Remote</h1>
+<md-button class="md-raised" ng-click="logout()">Log Out</md-button>
+
+
 </md-toolbar>
 
 <md-content layout="row" layout-wrap layout-align="center center">
